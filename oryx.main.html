@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Cheats Out Right Now</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 2s ease-out forwards;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        .nebula {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(100, 0, 150, 0.3), transparent 70%);
+            opacity: 0.5;
+            z-index: -1;
+        }
+        .btn {
+            background: linear-gradient(45deg, #6b21a8, #d946ef);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="nebula"></div>
+    <canvas id="galaxyCanvas"></canvas>
+    <div class="content flex flex-col items-center justify-center h-screen">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-4 fade-in opacity-0" style="animation-delay: 0.5s;">
+            Join Oryx Discord!
+        </h2>
+        <h1 id="mainMessage" class="text-4xl md:text-6xl font-bold mb-8 fade-in opacity-0" style="animation-delay: 1s;">
+            Best Cheats Out Right Now!
+        </h1>
+        <button id="joinButton" class="btn text-white text-lg pulse">
+            Join Now
+        </button>
+        <p id="keyDisplay" class="mt-8 text-xl opacity-0 transition-opacity duration-500"></p>
+    </div>
+    <script>
+        // Canvas setup for galaxy stars
+        const canvas = document.getElementById('galaxyCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Star field
+        const stars = [];
+        for (let i = 0; i < 200; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5 + 0.5,
+                alpha: Math.random() * 0.5 + 0.5,
+                speed: Math.random() * 0.5 + 0.1
+            });
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.globalAlpha = star.alpha;
+                ctx.fill();
+                star.y += star.speed;
+                if (star.y > canvas.height) star.y = 0;
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(drawStars);
+        }
+
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Generate 10-digit key
+        function generateKey() {
+            let key = '';
+            for (let i = 0; i < 10; i++) {
+                key += Math.floor(Math.random() * 10);
+            }
+            return key;
+        }
+
+        // Button click handler
+        document.getElementById('joinButton').addEventListener('click', () => {
+            const keyDisplay = document.getElementById('keyDisplay');
+            keyDisplay.textContent = `Your Key: ${generateKey()}`;
+            keyDisplay.classList.remove('opacity-0');
+            keyDisplay.classList.add('fade-in');
+            setTimeout(() => {
+                window.location.href = 'https://discord.gg/SAQPyMha';
+            }, 1000); // Delay redirect to show key briefly
+        });
+
+        // Start animations
+        drawStars();
+    </script>
+</body>
+</html>
